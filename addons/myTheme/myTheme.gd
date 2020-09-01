@@ -219,7 +219,7 @@ func copy_default_theme():
 	var temp
 	for i in gds:
 		temp = load(i)
-		if temp.can_instance():
+		if temp.get_instance_base_type() != "EditorPlugin" && temp.can_instance():
 			temp = temp.new()
 			if temp is Control:
 				if temp.has_method("_register_default_theme"):
