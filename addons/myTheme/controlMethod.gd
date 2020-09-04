@@ -78,7 +78,7 @@ static func add_sound_override(p_control:Control, p_name:String, p_value):
 	data[p_name] = p_value
 	p_control.notification(Control.NOTIFICATION_THEME_CHANGED)
 
-static func get_bool(p_control:Control, p_name:String, p_type := ""):
+static func get_bool(p_control:Control, p_name:String, p_type := "", p_default := true):
 	if p_type == "" || p_type == p_control.get_class():
 		if has_bool_override(p_control, p_name):
 			return p_control.get_meta(BOOL_META_NAME)[p_name]
@@ -116,11 +116,14 @@ static func get_bool(p_control:Control, p_name:String, p_type := ""):
 		if defaultProjectTheme != null && defaultProjectTheme is MyTheme && defaultProjectTheme.has_bool(p_name, type):
 			return defaultProjectTheme.get_bool(p_name, type)
 	
+	if !p_default:
+		return null
+	
 	var defaultTheme = MyTheme.new()
 	defaultTheme.copy_default_theme()
-	return defaultTheme.get_bool(p_name, type)
+	return defaultTheme.get_bool(p_name, type, false)
 
-static func get_enum(p_control:Control, p_name:String, p_type = ""):
+static func get_enum(p_control:Control, p_name:String, p_type := "", p_default := true):
 	if p_type == "" || p_type == p_control.get_class():
 		if has_enum_override(p_control, p_name):
 			return p_control.get_meta(ENUM_META_NAME)[p_name]
@@ -159,11 +162,14 @@ static func get_enum(p_control:Control, p_name:String, p_type = ""):
 		if defaultProjectTheme != null && defaultProjectTheme is MyTheme && defaultProjectTheme.has_enum(p_name, type):
 			return defaultProjectTheme.get_enum(p_name, type)
 	
+	if !p_default:
+		return null
+	
 	var defaultTheme = MyTheme.new()
 	defaultTheme.copy_default_theme()
-	return defaultTheme.get_enum(p_name, type)
+	return defaultTheme.get_enum(p_name, type, false)
 
-static func get_float(p_control:Control, p_name:String, p_type = ""):
+static func get_float(p_control:Control, p_name:String, p_type := "", p_default := true):
 	if p_type == "" || p_type == p_control.get_class():
 		if has_float_override(p_control, p_name):
 			return p_control.get_meta(FLOAT_META_NAME)[p_name]
@@ -202,12 +208,15 @@ static func get_float(p_control:Control, p_name:String, p_type = ""):
 		if defaultProjectTheme != null && defaultProjectTheme is MyTheme && defaultProjectTheme.has_float(p_name, type):
 			return defaultProjectTheme.get_float(p_name, type)
 	
+	if !p_default:
+		return null
+	
 	var defaultTheme = MyTheme.new()
 	defaultTheme.copy_default_theme()
-	return defaultTheme.get_float(p_name, type)
+	return defaultTheme.get_float(p_name, type, false)
 
 
-static func get_sound(p_control:Control, p_name:String, p_type = ""):
+static func get_sound(p_control:Control, p_name:String, p_type := "", p_default := true):
 	if p_type == "" || p_type == p_control.get_class():
 		if has_sound_override(p_control, p_name):
 			var data = p_control.get_meta(SOUND_META_NAME)
@@ -247,12 +256,15 @@ static func get_sound(p_control:Control, p_name:String, p_type = ""):
 		if defaultProjectTheme != null && defaultProjectTheme is MyTheme && defaultProjectTheme.has_sound(p_name, type):
 			return defaultProjectTheme.get_sound(p_name, type)
 	
+	if !p_default:
+		return null
+	
 	var defaultTheme = MyTheme.new()
 	defaultTheme.copy_default_theme()
-	return defaultTheme.get_sound(p_name, type)
+	return defaultTheme.get_sound(p_name, type, false)
 
 
-static func has_bool(p_control:Control, p_name:String, p_type = "") -> bool:
+static func has_bool(p_control:Control, p_name:String, p_type := "") -> bool:
 	if p_type == "" || p_type == p_control.get_class():
 		if has_bool_override(p_control, p_name):
 			return true
@@ -288,9 +300,8 @@ static func has_bool(p_control:Control, p_name:String, p_type = "") -> bool:
 		var defaultProjectTheme = load(defaultProjectThemePath)
 		if defaultProjectTheme != null && defaultProjectTheme is MyTheme && defaultProjectTheme.has_bool(p_name, type):
 			return true
-	var defaultTheme = MyTheme.new()
-	defaultTheme.copy_default_theme()
-	return defaultTheme.has_bool(p_name, type)
+	
+	return false
 
 static func has_bool_override(p_control:Control, p_name:String) -> bool:
 	return p_control.has_meta(BOOL_META_NAME) && p_control.get_meta(BOOL_META_NAME) is Dictionary && p_control.get_meta(BOOL_META_NAME).has(p_name)
@@ -333,10 +344,8 @@ static func has_enum(p_control:Control, p_name:String, p_type = "") -> bool:
 		var defaultProjectTheme = load(defaultProjectThemePath)
 		if defaultProjectTheme != null && defaultProjectTheme is MyTheme && defaultProjectTheme.has_enum(p_name, type):
 			return true
-	
-	var defaultTheme = MyTheme.new()
-	defaultTheme.copy_default_theme()
-	return defaultTheme.has_enum(p_name, type)
+
+	return false
 
 static func has_enum_override(p_control:Control, p_name:String) -> bool:
 	return p_control.has_meta(ENUM_META_NAME) && p_control.get_meta(ENUM_META_NAME) is Dictionary && p_control.get_meta(ENUM_META_NAME).has(p_name)
@@ -380,9 +389,7 @@ static func has_float(p_control:Control, p_name:String, p_type = ""):
 		if defaultProjectTheme != null && defaultProjectTheme is MyTheme && defaultProjectTheme.has_float(p_name, type):
 			return true
 	
-	var defaultTheme = MyTheme.new()
-	defaultTheme.copy_default_theme()
-	return defaultTheme.has_float(p_name, type)
+	return false
 
 static func has_float_override(p_control:Control, p_name:String) -> bool:
 	return p_control.has_meta(FLOAT_META_NAME) && p_control.get_meta(FLOAT_META_NAME) is Dictionary && p_control.get_meta(FLOAT_META_NAME).has(p_name)
@@ -426,9 +433,7 @@ static func has_sound(p_control:Control, p_name:String, p_type = "") -> bool:
 		if defaultProjectTheme != null && defaultProjectTheme is MyTheme && defaultProjectTheme.has_sound(p_name, type):
 			return true
 	
-	var defaultTheme = MyTheme.new()
-	defaultTheme.copy_default_theme()
-	return defaultTheme.has_sound(p_name, type)
+	return false
 
 static func has_sound_override(p_control:Control, p_name:String) -> bool:
 	return p_control.has_meta(SOUND_META_NAME) && p_control.get_meta(SOUND_META_NAME) is Dictionary && p_control.get_meta(SOUND_META_NAME).has(p_name)
