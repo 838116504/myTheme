@@ -25,7 +25,9 @@ static func _add_override(p_control:Control, p_name:String, p_value, p_metaName:
 		data = {}
 		p_control.set_meta(p_metaName, data)
 	data[p_name] = p_value
-	p_control.notification(Control.NOTIFICATION_THEME_CHANGED)
+	
+	if p_control.is_inside_tree():
+		p_control.notification(Control.NOTIFICATION_THEME_CHANGED)
 
 static func add_bool_override(p_control:Control, p_name:String, p_value):
 	if p_value != null:
@@ -56,7 +58,9 @@ static func add_float_override(p_control:Control, p_name:String, p_value):
 		data = {}
 		p_control.set_meta(FLOAT_META_NAME, data)
 	data[p_name] = float(p_value)
-	p_control.notification(Control.NOTIFICATION_THEME_CHANGED)
+	
+	if p_control.is_inside_tree():
+		p_control.notification(Control.NOTIFICATION_THEME_CHANGED)
 
 static func add_sound_override(p_control:Control, p_name:String, p_value):
 	if p_value == null && not p_value is Object:
@@ -76,7 +80,8 @@ static func add_sound_override(p_control:Control, p_name:String, p_value):
 		data = {}
 		p_control.set_meta(SOUND_META_NAME, data)
 	data[p_name] = p_value
-	p_control.notification(Control.NOTIFICATION_THEME_CHANGED)
+	if p_control.is_inside_tree():
+		p_control.notification(Control.NOTIFICATION_THEME_CHANGED)
 
 static func get_bool(p_control:Control, p_name:String, p_type := "", p_default := true):
 	if p_type == "" || p_type == p_control.get_class():
@@ -121,7 +126,7 @@ static func get_bool(p_control:Control, p_name:String, p_type := "", p_default :
 	
 	var defaultTheme = MyTheme.new()
 	defaultTheme.copy_default_theme()
-	return defaultTheme.get_bool(p_name, type, false)
+	return defaultTheme.get_bool(p_name, type)
 
 static func get_enum(p_control:Control, p_name:String, p_type := "", p_default := true):
 	if p_type == "" || p_type == p_control.get_class():
@@ -167,7 +172,7 @@ static func get_enum(p_control:Control, p_name:String, p_type := "", p_default :
 	
 	var defaultTheme = MyTheme.new()
 	defaultTheme.copy_default_theme()
-	return defaultTheme.get_enum(p_name, type, false)
+	return defaultTheme.get_enum(p_name, type)
 
 static func get_float(p_control:Control, p_name:String, p_type := "", p_default := true):
 	if p_type == "" || p_type == p_control.get_class():
@@ -213,7 +218,7 @@ static func get_float(p_control:Control, p_name:String, p_type := "", p_default 
 	
 	var defaultTheme = MyTheme.new()
 	defaultTheme.copy_default_theme()
-	return defaultTheme.get_float(p_name, type, false)
+	return defaultTheme.get_float(p_name, type)
 
 
 static func get_sound(p_control:Control, p_name:String, p_type := "", p_default := true):
@@ -261,7 +266,7 @@ static func get_sound(p_control:Control, p_name:String, p_type := "", p_default 
 	
 	var defaultTheme = MyTheme.new()
 	defaultTheme.copy_default_theme()
-	return defaultTheme.get_sound(p_name, type, false)
+	return defaultTheme.get_sound(p_name, type)
 
 
 static func has_bool(p_control:Control, p_name:String, p_type := "") -> bool:

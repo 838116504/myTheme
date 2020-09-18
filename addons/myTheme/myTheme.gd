@@ -219,17 +219,23 @@ func copy_default_theme():
 	var temp
 	for i in gds:
 		temp = load(i)
-		if temp.get_instance_base_type() != "EditorPlugin" && temp.can_instance():
-			temp = temp.new()
-			if temp is Control:
-				if temp.has_method("_register_default_theme"):
-					temp._register_default_theme(self)
-				temp.queue_free()
-			elif not temp is Reference:
-				if temp is Node:
-					temp.queue_free()
-				else:
-					temp.free()
+		var methodList = temp.get_script_method_list()
+		for j in methodList:
+			if j.has("name") && j["name"] == "_register_default_theme":
+				temp.call("_register_default_theme", self)
+#				temp = temp.new()
+#				if temp == null:
+#					break
+#				if temp is Control:
+#					temp._register_default_theme(self)
+#					temp.queue_free()
+#				elif not temp is Reference:
+#					if temp is Node:
+#						temp.queue_free()
+#					else:
+#						temp.free()
+				break
+	
 
 #	var classNames = ClassDB.get_inheriters_from_class("Control")
 #	for i in classNames.size():
