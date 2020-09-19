@@ -84,10 +84,15 @@ static func add_sound_override(p_control:Control, p_name:String, p_value):
 		p_control.notification(Control.NOTIFICATION_THEME_CHANGED)
 
 static func get_bool(p_control:Control, p_name:String, p_type := "", p_default := true):
-	if p_type == "" || p_type == p_control.get_class():
+	var controlClass
+	if p_control.get_script() != null && p_control.has_method("get_class_static"):
+		controlClass = p_control.get_class_static()
+	else:
+		controlClass = p_control.get_class()
+	if p_type == "" || p_type == controlClass:
 		if has_bool_override(p_control, p_name):
 			return p_control.get_meta(BOOL_META_NAME)[p_name]
-	var type = p_control.get_class() if p_type == "" else p_type
+	var type = controlClass if p_type == "" else p_type
 	var classNameArray = []
 	classNameArray.append(type)
 	var control = p_control
@@ -99,8 +104,8 @@ static func get_bool(p_control:Control, p_name:String, p_type := "", p_default :
 		if control != p_control:
 			control.queue_free()
 		control = temp
-		if control.has_method("get_class"):
-			classNameArray.append(control.get_class())
+		if control.has_method("get_class_static"):
+			classNameArray.append(control.get_class_static())
 	if control != p_control:
 		control.queue_free()
 	
@@ -129,11 +134,16 @@ static func get_bool(p_control:Control, p_name:String, p_type := "", p_default :
 	return defaultTheme.get_bool(p_name, type)
 
 static func get_enum(p_control:Control, p_name:String, p_type := "", p_default := true):
-	if p_type == "" || p_type == p_control.get_class():
+	var controlClass
+	if p_control.get_script() != null && p_control.has_method("get_class_static"):
+		controlClass = p_control.get_class_static()
+	else:
+		controlClass = p_control.get_class()
+	if p_type == "" || p_type == controlClass:
 		if has_enum_override(p_control, p_name):
 			return p_control.get_meta(ENUM_META_NAME)[p_name]
 	
-	var type = p_control.get_class() if p_type == "" else p_type
+	var type = controlClass if p_type == "" else p_type
 	var classNameArray = []
 	classNameArray.append(type)
 	var control = p_control
@@ -145,8 +155,8 @@ static func get_enum(p_control:Control, p_name:String, p_type := "", p_default :
 		if control != p_control:
 			control.queue_free()
 		control = temp
-		if control.has_method("get_class"):
-			classNameArray.append(control.get_class())
+		if control.has_method("get_class_static"):
+			classNameArray.append(control.get_class_static())
 	if control != p_control:
 		control.queue_free()
 	
@@ -175,11 +185,16 @@ static func get_enum(p_control:Control, p_name:String, p_type := "", p_default :
 	return defaultTheme.get_enum(p_name, type)
 
 static func get_float(p_control:Control, p_name:String, p_type := "", p_default := true):
-	if p_type == "" || p_type == p_control.get_class():
+	var controlClass
+	if p_control.get_script() != null && p_control.has_method("get_class_static"):
+		controlClass = p_control.get_class_static()
+	else:
+		controlClass = p_control.get_class()
+	if p_type == "" || p_type == controlClass:
 		if has_float_override(p_control, p_name):
 			return p_control.get_meta(FLOAT_META_NAME)[p_name]
 	
-	var type = p_control.get_class() if p_type == "" else p_type
+	var type = controlClass if p_type == "" else p_type
 	var classNameArray = []
 	classNameArray.append(type)
 	var control = p_control
@@ -191,8 +206,8 @@ static func get_float(p_control:Control, p_name:String, p_type := "", p_default 
 		if control != p_control:
 			control.queue_free()
 		control = temp
-		if control.has_method("get_class"):
-			classNameArray.append(control.get_class())
+		if control.has_method("get_class_static"):
+			classNameArray.append(control.get_class_static())
 	if control != p_control:
 		control.queue_free()
 	
@@ -222,12 +237,17 @@ static func get_float(p_control:Control, p_name:String, p_type := "", p_default 
 
 
 static func get_sound(p_control:Control, p_name:String, p_type := "", p_default := true):
-	if p_type == "" || p_type == p_control.get_class():
+	var controlClass
+	if p_control.get_script() != null && p_control.has_method("get_class_static"):
+		controlClass = p_control.get_class_static()
+	else:
+		controlClass = p_control.get_class()
+	if p_type == "" || p_type == controlClass:
 		if has_sound_override(p_control, p_name):
 			var data = p_control.get_meta(SOUND_META_NAME)
 			return data[p_name]
 	
-	var type = p_control.get_class() if p_type == "" else p_type
+	var type = controlClass if p_type == "" else p_type
 	var classNameArray = []
 	classNameArray.append(type)
 	var control = p_control
@@ -239,8 +259,8 @@ static func get_sound(p_control:Control, p_name:String, p_type := "", p_default 
 		if control != p_control:
 			control.queue_free()
 		control = temp
-		if control.has_method("get_class"):
-			classNameArray.append(control.get_class())
+		if control.has_method("get_class_static"):
+			classNameArray.append(control.get_class_static())
 	if control != p_control:
 		control.queue_free()
 	
@@ -270,10 +290,15 @@ static func get_sound(p_control:Control, p_name:String, p_type := "", p_default 
 
 
 static func has_bool(p_control:Control, p_name:String, p_type := "") -> bool:
-	if p_type == "" || p_type == p_control.get_class():
+	var controlClass
+	if p_control.get_script() != null && p_control.has_method("get_class_static"):
+		controlClass = p_control.get_class_static()
+	else:
+		controlClass = p_control.get_class()
+	if p_type == "" || p_type == controlClass:
 		if has_bool_override(p_control, p_name):
 			return true
-	var type = p_control.get_class() if p_type == "" else p_type
+	var type = controlClass if p_type == "" else p_type
 	var classNameArray = []
 	classNameArray.append(type)
 	var control = p_control
@@ -285,8 +310,8 @@ static func has_bool(p_control:Control, p_name:String, p_type := "") -> bool:
 		if control != p_control:
 			control.queue_free()
 		control = temp
-		if control.has_method("get_class"):
-			classNameArray.append(control.get_class())
+		if control.has_method("get_class_static"):
+			classNameArray.append(control.get_class_static())
 	if control != p_control:
 		control.queue_free()
 	
@@ -312,11 +337,16 @@ static func has_bool_override(p_control:Control, p_name:String) -> bool:
 	return p_control.has_meta(BOOL_META_NAME) && p_control.get_meta(BOOL_META_NAME) is Dictionary && p_control.get_meta(BOOL_META_NAME).has(p_name)
 
 static func has_enum(p_control:Control, p_name:String, p_type = "") -> bool:
-	if p_type == "" || p_type == p_control.get_class():
+	var controlClass
+	if p_control.get_script() != null && p_control.has_method("get_class_static"):
+		controlClass = p_control.get_class_static()
+	else:
+		controlClass = p_control.get_class()
+	if p_type == "" || p_type == controlClass:
 		if has_enum_override(p_control, p_name):
 			return true
 	
-	var type = p_control.get_class() if p_type == "" else p_type
+	var type = controlClass if p_type == "" else p_type
 	var classNameArray = []
 	classNameArray.append(type)
 	var control = p_control
@@ -328,8 +358,8 @@ static func has_enum(p_control:Control, p_name:String, p_type = "") -> bool:
 		if control != p_control:
 			control.queue_free()
 		control = temp
-		if control.has_method("get_class"):
-			classNameArray.append(control.get_class())
+		if control.has_method("get_class_static"):
+			classNameArray.append(control.get_class_static())
 	if control != p_control:
 		control.queue_free()
 	
@@ -356,11 +386,16 @@ static func has_enum_override(p_control:Control, p_name:String) -> bool:
 	return p_control.has_meta(ENUM_META_NAME) && p_control.get_meta(ENUM_META_NAME) is Dictionary && p_control.get_meta(ENUM_META_NAME).has(p_name)
 
 static func has_float(p_control:Control, p_name:String, p_type = ""):
-	if p_type == "" || p_type == p_control.get_class():
+	var controlClass
+	if p_control.get_script() != null && p_control.has_method("get_class_static"):
+		controlClass = p_control.get_class_static()
+	else:
+		controlClass = p_control.get_class()
+	if p_type == "" || p_type == controlClass:
 		if has_float_override(p_control, p_name):
 			return true
 	
-	var type = p_control.get_class() if p_type == "" else p_type
+	var type = controlClass if p_type == "" else p_type
 	var classNameArray = []
 	classNameArray.append(type)
 	var control = p_control
@@ -372,8 +407,8 @@ static func has_float(p_control:Control, p_name:String, p_type = ""):
 		if control != p_control:
 			control.queue_free()
 		control = temp
-		if control.has_method("get_class"):
-			classNameArray.append(control.get_class())
+		if control.has_method("get_class_static"):
+			classNameArray.append(control.get_class_static())
 	if control != p_control:
 		control.queue_free()
 	
@@ -400,11 +435,16 @@ static func has_float_override(p_control:Control, p_name:String) -> bool:
 	return p_control.has_meta(FLOAT_META_NAME) && p_control.get_meta(FLOAT_META_NAME) is Dictionary && p_control.get_meta(FLOAT_META_NAME).has(p_name)
 
 static func has_sound(p_control:Control, p_name:String, p_type = "") -> bool:
-	if p_type == "" || p_type == p_control.get_class():
+	var controlClass
+	if p_control.get_script() != null && p_control.has_method("get_class_static"):
+		controlClass = p_control.get_class_static()
+	else:
+		controlClass = p_control.get_class()
+	if p_type == "" || p_type == controlClass:
 		if has_sound_override(p_control, p_name):
 			return true
 	
-	var type = p_control.get_class() if p_type == "" else p_type
+	var type = controlClass if p_type == "" else p_type
 	var classNameArray = []
 	classNameArray.append(type)
 	var control = p_control
@@ -416,8 +456,8 @@ static func has_sound(p_control:Control, p_name:String, p_type = "") -> bool:
 		if control != p_control:
 			control.queue_free()
 		control = temp
-		if control.has_method("get_class"):
-			classNameArray.append(control.get_class())
+		if control.has_method("get_class_static"):
+			classNameArray.append(control.get_class_static())
 	if control != p_control:
 		control.queue_free()
 	

@@ -8,7 +8,7 @@ var enumNames := {}
 var floatData := {}
 var soundData := {}
 
-func get_class():
+static func get_class_static() -> String:
 	return "MyTheme"
 
 func clear_bool(p_name:String, p_type:String) -> void:

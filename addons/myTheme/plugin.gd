@@ -20,8 +20,6 @@ var popupMode
 var editTheme
 
 func _enter_tree():
-#	add_custom_type("MyControl", "Control", preload("myControl.gd"), get_editor_interface().get_base_control().get_icon("Control", "EditorIcons"))
-	
 	_find_themeVBC()
 	_create_add_del_dialog()
 
@@ -96,7 +94,6 @@ func _create_add_del_dialog():
 	vbc.add_child(typeSelectBtn)
 
 func _exit_tree():
-#	remove_custom_type("MyControl")
 	pass
 
 func _type_menu_id_pressed(p_id):
